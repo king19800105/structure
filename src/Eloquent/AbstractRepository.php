@@ -176,7 +176,7 @@ abstract class AbstractRepository implements IRepository
     public function paginate(int $perPage = 0)
     {
         if ($perPage <= 0) {
-            $perPage = config('architecture.pagination.limit');
+            $perPage = config('structure.pagination.limit');
         }
         
         return $this->entity->paginate($perPage);

@@ -22,7 +22,7 @@ trait CacheGenerate
     protected function getOrCache($key, callable $callableOnMiss)
     {
         $key = $this->cacheKeyPrefix ?? class_basename($this) . ':' . $key;
-        $cacheConfig = config('architecture.cache') ?? $this->defaultCacheSettings;
+        $cacheConfig = config('structure.cache') ?? $this->defaultCacheSettings;
 
         if ($cacheConfig['enabled']) {
             $cache = cache();

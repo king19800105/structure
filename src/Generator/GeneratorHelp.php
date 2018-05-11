@@ -32,7 +32,7 @@ trait GeneratorHelp
 
     protected function generatorInit()
     {
-        $this->generatorConfig = config('architecture.generator');
+        $this->generatorConfig = config('structure.generator');
     }
 
     protected function getNamespaceByType($type)
@@ -183,6 +183,5 @@ trait GeneratorHelp
         File::put($fileName, $content);
         $this->info($fileClassName . ' replace successfully.');
     }
-
 
 }

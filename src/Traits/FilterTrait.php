@@ -44,7 +44,7 @@ trait FilterTrait
      */
     public function init($entity, $filterList)
     {
-        $this->orderConfigs = config('architecture.order');
+        $this->orderConfigs = config('structure.order');
         $this->entity = $entity;
         $this->filterList = $filterList;
 
@@ -60,6 +60,7 @@ trait FilterTrait
     {
         //获取path params 合并到request里面
         request()->merge(request()->route()->parameters());
+
         return array_filter(
             request()->only(array_keys($this->filterList))
         );

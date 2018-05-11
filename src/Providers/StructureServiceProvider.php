@@ -4,7 +4,7 @@ namespace Anthony\Structure\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ArchitectureServiceProvider extends ServiceProvider
+class StructureServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,13 +14,13 @@ class ArchitectureServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../Config/architecture.php' => config_path('architecture.php')
+            __DIR__ . '/../Config/structure.php' => config_path('structure.php')
         ]);
 
         
-        $this->mergeConfigFrom(__DIR__ . '/../Config/architecture.php', 'architecture');
+        $this->mergeConfigFrom(__DIR__ . '/../Config/structure.php', 'structure');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Lang', 'architecture');
+        $this->loadTranslationsFrom(__DIR__ . '/../Lang', 'structure');
     }
 
     /**

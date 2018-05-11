@@ -1,6 +1,6 @@
 {
     "name": "anthony/structure",
-    "description": "an architecture for laravel",
+    "description": "an Structure for laravel",
     "keywords": ["laravel","structure", "repository", "eloquent", "model"],
     "homepage": "https://github.com/king19800105/structure.git",
     "license": "MIT",
@@ -35,7 +35,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Anthony\\Structure\\Providers\\ArchitectureServiceProvider"
+                "Anthony\\Structure\\Providers\\StructureServiceProvider"
             ]
         }
     }

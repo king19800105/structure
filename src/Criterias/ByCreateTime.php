@@ -4,7 +4,7 @@ namespace Anthony\Structure\Criterias;
 
 /**
  * Class ByCreateTime
- * @package App\Architecture\Criterias
+ * @package App\Structure\Criterias
  */
 class ByCreateTime implements ICriteria
 {
