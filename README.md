@@ -18,7 +18,7 @@
 
 #### 生成配置文件
 ```php
-    php artisan vendor:publish --provider "Anthony\Structure\Providers\ArchitectureServiceProvider"
+    php artisan vendor:publish --provider "Anthony\Structure\Providers\StructureServiceProvider"
 ```
 
 #### 注册到服务容器

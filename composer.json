@@ -8,10 +8,6 @@
         {
             "name": "Anthony",
             "email": "king19800105@163.com"
-        },
-        {
-            "name": "yb19890724",
-            "email": "354037968@qq.com"
         }
     ],
     "minimum-stability": "dev",
