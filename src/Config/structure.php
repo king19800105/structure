@@ -25,8 +25,7 @@ return [
      */
     'order' => [
         'type'  => 'o',
-        'field' => '
-        ',
+        'field' => 'orderable',
     ],
     /**
      * 文件自动生成器
