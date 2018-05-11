@@ -11,7 +11,7 @@
 执行以下命令获取包的最新版本:
 
 ```php
-    composer require anthony\structure
+    composer require anthony/structure
 ```
 
 ### laravel
