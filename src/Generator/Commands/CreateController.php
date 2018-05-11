@@ -13,7 +13,7 @@ class CreateController extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:controller {name} {--resource}';
+    protected $signature = 'anthony:controller {name} {--resource}';
 
     /**
      * The console command description.

@@ -13,7 +13,7 @@ class CreateModel extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:model {name}';
+    protected $signature = 'anthony:model {name}';
 
     /**
      * The console command description.

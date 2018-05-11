@@ -13,7 +13,7 @@ class CreateCriteria extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:criteria {name}';
+    protected $signature = 'anthony:criteria {name}';
 
     /**
      * The console command description.

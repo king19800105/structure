@@ -17,7 +17,7 @@ class CreateEntity extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:entity {name} {--resource}';
+    protected $signature = 'anthony:entity {name} {--resource}';
 
     /**
      * The console command description.
@@ -54,36 +54,36 @@ class CreateEntity extends Command
         $this->option = $this->option('resource') ?? false;
         $params = ['name' => $this->name];
         $fullParams = array_merge($params, ['--resource' => $this->option]);
-        $this->call('phpno1:controller', $fullParams);
-        $this->call('phpno1:model', $params);
-        $this->call('phpno1:repository', $params);
+        $this->call('anthony:controller', $fullParams);
+        $this->call('anthony:model', $params);
+        $this->call('anthony:repository', $params);
 
         if ($this->confirm('Do you want to create Service ? [y|n]')) {
-            $this->call('phpno1:service', $fullParams);
+            $this->call('anthony:service', $fullParams);
         } else {
             $this->warn('skip');
         }
 
         if ($this->confirm('Do you want to create Request ? [y|n]')) {
             $name = 'StoreRequest';
-            $this->call('phpno1:request', ['name' => $name, '--dir' => $this->name]);
+            $this->call('anthony:request', ['name' => $name, '--dir' => $this->name]);
             $name = 'UpdateRequest';
-            $this->call('phpno1:request', ['name' => $name, '--dir' => $this->name]);
+            $this->call('anthony:request', ['name' => $name, '--dir' => $this->name]);
         } else {
             $this->warn('skip');
         }
 
         if ($this->confirm('Do you want to create Response ? [y|n]')) {
             $name = 'IndexResponse';
-            $this->call('phpno1:response', ['name' => $name, '--dir' => $this->name]);
+            $this->call('anthony:response', ['name' => $name, '--dir' => $this->name]);
             $name = 'ShowResponse';
-            $this->call('phpno1:response', ['name' => $name, '--dir' => $this->name]);
+            $this->call('anthony:response', ['name' => $name, '--dir' => $this->name]);
         } else {
             $this->warn('skip');
         }
 
         if ($this->confirm('Do you want to create Seeder ? [y|n]')) {
-            $this->call('phpno1:seeder', $params);
+            $this->call('anthony:seeder', $params);
         }
     }
 }

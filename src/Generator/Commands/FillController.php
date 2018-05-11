@@ -14,7 +14,7 @@ class FillController extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:fill-c {name}';
+    protected $signature = 'anthony:fill-c {name}';
 
     /**
      * The console command description.

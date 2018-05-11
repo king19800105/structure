@@ -13,7 +13,7 @@ class CreateFilter extends Command
      *
      * @var string
      */
-    protected $signature = 'phpno1:filter {name} {--prefix=} {--sort}';
+    protected $signature = 'anthony:filter {name} {--prefix=} {--sort}';
 
     /**
      * The console command description.
