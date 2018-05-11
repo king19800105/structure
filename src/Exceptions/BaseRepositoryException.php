@@ -11,7 +11,7 @@ use Exception;
  */
 abstract class BaseRepositoryException extends Exception
 {
-    protected const LANGUAGE_FILE_NAME = 'repository';
+    protected const LANGUAGE_FILE_NAME = 'structure';
 
     protected $snakeClassName;
 

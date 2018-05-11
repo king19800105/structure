@@ -85,13 +85,13 @@ trait FilterTrait
      *
      * @return array
      */
-    protected function getOrderAble()
+    protected function getOrderable()
     {
-        $request = [];
-        if (!empty($this->orderConfigs) && is_array($this->orderConfigs)) {
-            $request = array_intersect(request()->keys(), $this->orderConfigs);
-        }
-        return !empty($request) ? request()->only($request) : [];
+        $list = array_filter(
+            request()->only([$this->orderConfigs['field'], $this->orderConfigs['type']])
+        );
+
+        return count($list) === count($this->orderConfigs) ? $list : [];
     }
 
     /**
@@ -102,11 +102,13 @@ trait FilterTrait
     public function doOrder()
     {
         $orderInfo = $this->getOrderable();
+
         if (!empty($orderInfo)) {
-            foreach ($orderInfo as $key => $value) {
-                $this->entity = $this->resolveOrder($key)->order($this->entity, $value);
-            }
+            $key = $orderInfo[$this->orderConfigs['field']];
+            $type = $orderInfo[$this->orderConfigs['type']];
+            $this->entity = $this->resolveOrder($key)->order($this->entity, $type);
         }
+
         return $this;
     }
 

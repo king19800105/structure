@@ -16,10 +16,7 @@ class StructureServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../Config/structure.php' => config_path('structure.php')
         ]);
-
-        
         $this->mergeConfigFrom(__DIR__ . '/../Config/structure.php', 'structure');
-
         $this->loadTranslationsFrom(__DIR__ . '/../Lang', 'structure');
     }
 
