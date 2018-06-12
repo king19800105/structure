@@ -36,7 +36,7 @@ return [
             'controller'          => 'Backend',
             'repository_eloquent' => 'Repository\\Eloquent',
             'repository'          => 'Repository\\Contracts',
-            'criteria'            => 'Structure\\Criterias',
+            'criteria'            => 'Repository\\Criterias',
             'provider'            => 'Providers\\StructureServiceProvider',
             'service'             => 'Services',
             'model'               => 'Models',

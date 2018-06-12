@@ -38,28 +38,28 @@ abstract class AbstractRepository implements IRepository
 
     public function __construct()
     {
-        $this->entity = $this->resolveEntity();
+        $this->resolveEntity();
         $this->boot();
     }
 
     /**
      * callback model scope method
+     * add scope must be in the front
+     *
      * @param string $name
      * @param string $parameters
      * @return $this
      */
     public function __call($method, $parameters)
     {
-        if (method_exists($this->entity, $scope = 'scope'.ucfirst($method))) {
+        $scope = 'scope'.ucfirst($method);
 
+        if (method_exists($this->entity, $scope)) {
             array_unshift($parameters, $this->entity);
-
-            $this->entity=$this->entity->$scope(...array_values($parameters));
-
+            $this->entity = $this->entity->$scope(...array_values($parameters));
             return $this;
         }
     }
-
 
 
     /**
@@ -69,6 +69,15 @@ abstract class AbstractRepository implements IRepository
      */
     public function boot()
     {
+
+    }
+
+    /**
+     * 重置entity对象
+     */
+    public function resetEntity()
+    {
+        $this->resolveEntity();
     }
 
     /**
@@ -78,7 +87,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function all()
     {
-        return $this->entity->get();
+        $result = $this->entity->get();
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -88,7 +100,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function first()
     {
-        return $this->entity->first();
+        $result = $this->entity->first();
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -98,7 +113,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function count()
     {
-        return $this->entity->count();
+        $result = $this->entity->count();
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -109,7 +127,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function findWhereCount(...$condition)
     {
-        return $this->setWhere($condition)->count();
+        $result = $this->setWhere($condition)->count();
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -128,6 +149,7 @@ abstract class AbstractRepository implements IRepository
                 get_class($this->entity->getModel())
             )
         );
+        $this->resetEntity();
 
         return $model;
     }
@@ -142,7 +164,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function findWhere(...$condition)
     {
-        return $this->setWhere($condition)->all();
+        $result = $this->setWhere($condition)->all();
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -163,6 +188,7 @@ abstract class AbstractRepository implements IRepository
                 get_class($this->entity->getModel())
             )
         );
+        $this->resetEntity();
 
         return $res;
     }
@@ -179,7 +205,10 @@ abstract class AbstractRepository implements IRepository
             $perPage = config('structure.pagination.limit');
         }
         
-        return $this->entity->paginate($perPage);
+        $result = $this->entity->paginate($perPage);
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -190,7 +219,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function create(array $properties)
     {
-        return $this->entity->create($properties);
+        $result = $this->entity->create($properties);
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -201,7 +233,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function createForBatch(array $properties)
     {
-        return $this->entity->insert($properties);
+        $result = $this->entity->insert($properties);
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -235,7 +270,10 @@ abstract class AbstractRepository implements IRepository
      */
     public function deleteByIds(array $ids)
     {
-        return $this->entity->destroy($ids);
+        $result = $this->entity->destroy($ids);
+        $this->resetEntity();
+
+        return $result;
     }
 
     /**
@@ -247,7 +285,7 @@ abstract class AbstractRepository implements IRepository
     public function withCriteria(...$criteria)
     {
         $criteria = array_flatten($criteria);
-        $model=clone $this->entity;
+        $model = $this->entity;
 
         foreach ($criteria as $item) {
             throw_if(
@@ -256,6 +294,8 @@ abstract class AbstractRepository implements IRepository
             );
             $model = $item->apply($this->entity);
         }
+
+        $this->resetEntity();
 
         return $model;
     }
@@ -375,6 +415,6 @@ abstract class AbstractRepository implements IRepository
             new NoEntityDefinedException()
         );
 
-        return app()->make($this->entity());
+        $this->entity = app()->make($this->entity());
     }
 }
