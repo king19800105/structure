@@ -36,10 +36,29 @@ abstract class AbstractRepository implements IRepository
      */
     protected $entity;
 
+    /**
+     * 标准列表
+     *
+     * @var
+     */
+    protected $criteria;
+
     public function __construct()
     {
         $this->resolveEntity();
+        $this->criteria = [];
         $this->boot();
+    }
+
+
+    /**
+     * 初始化加载器，子类重写后使用
+     * 
+     * @return void
+     */
+    public function boot()
+    {
+
     }
 
     /**
@@ -61,15 +80,17 @@ abstract class AbstractRepository implements IRepository
         }
     }
 
-
     /**
-     * 初始化加载器，子类重写后使用
-     * 
-     * @return void
+     * 选择要的字段
+     *
+     * @param array ...$value
+     * @return $this
      */
-    public function boot()
+    public function select(...$value)
     {
+        $this->entity = $this->entity->select($value);
 
+        return $this;
     }
 
     /**
@@ -87,10 +108,7 @@ abstract class AbstractRepository implements IRepository
      */
     public function all()
     {
-        $result = $this->entity->get();
-        $this->resetEntity();
-
-        return $result;
+        return $this->withCriteria()->get();
     }
 
     /**
@@ -100,10 +118,7 @@ abstract class AbstractRepository implements IRepository
      */
     public function first()
     {
-        $result = $this->entity->first();
-        $this->resetEntity();
-
-        return $result;
+        return $this->withCriteria()->first();
     }
 
     /**
@@ -113,10 +128,7 @@ abstract class AbstractRepository implements IRepository
      */
     public function count()
     {
-        $result = $this->entity->count();
-        $this->resetEntity();
-
-        return $result;
+        return $this->withCriteria()->count();
     }
 
     /**
@@ -127,10 +139,7 @@ abstract class AbstractRepository implements IRepository
      */
     public function findWhereCount(...$condition)
     {
-        $result = $this->setWhere($condition)->count();
-        $this->resetEntity();
-
-        return $result;
+        return $this->setWhere($condition)->count();
     }
 
     /**
@@ -164,10 +173,7 @@ abstract class AbstractRepository implements IRepository
      */
     public function findWhere(...$condition)
     {
-        $result = $this->setWhere($condition)->all();
-        $this->resetEntity();
-
-        return $result;
+        return $this->setWhere($condition)->all();
     }
 
     /**
@@ -188,7 +194,6 @@ abstract class AbstractRepository implements IRepository
                 get_class($this->entity->getModel())
             )
         );
-        $this->resetEntity();
 
         return $res;
     }
@@ -205,10 +210,7 @@ abstract class AbstractRepository implements IRepository
             $perPage = config('structure.pagination.limit');
         }
         
-        $result = $this->entity->paginate($perPage);
-        $this->resetEntity();
-
-        return $result;
+        return $this->withCriteria()->paginate($perPage);
     }
 
     /**
@@ -277,6 +279,37 @@ abstract class AbstractRepository implements IRepository
     }
 
     /**
+     * 添加条件
+     *
+     * @param ICriteria $criteria
+     * @return $this
+     */
+    public function pushCriteria(ICriteria $criteria)
+    {
+        $key = get_class($criteria);
+        $this->criteria = array_merge($this->criteria, [$key => $criteria]);
+
+        return $this;
+    }
+
+    /**
+     * 弹出条件
+     *
+     * @param ICriteria $criteria
+     * @return $this
+     */
+    public function popCriteria(ICriteria $criteria)
+    {
+        $key = get_class($criteria);
+
+        if (array_key_exists($key, $this->criteria)) {
+            array_forget($this->criteria, $key);
+        }
+
+        return $this;
+    }
+
+    /**
      * 填充标准条件对象
      *
      * @param [type] ...$criteria
@@ -284,10 +317,16 @@ abstract class AbstractRepository implements IRepository
      */
     public function withCriteria(...$criteria)
     {
-        $criteria = array_flatten($criteria);
+        if (!empty($criteria)) {
+            foreach ($criteria as $item) {
+                $this->pushCriteria($item);
+            }
+        }
+
+        $criteriaList = array_flatten(array_values($this->criteria));
         $model = $this->entity;
 
-        foreach ($criteria as $item) {
+        foreach ($criteriaList as $item) {
             throw_if(
                 !$item instanceof ICriteria,
                 new IllegalCriteriaInstanceException()

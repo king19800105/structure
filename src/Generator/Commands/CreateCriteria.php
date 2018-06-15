@@ -13,7 +13,7 @@ class CreateCriteria extends Command
      *
      * @var string
      */
-    protected $signature = 'anthony:criteria {name}';
+    protected $signature = 'anthony:criteria {name} {--dir=}';
 
     /**
      * The console command description.
@@ -28,6 +28,10 @@ class CreateCriteria extends Command
      * @var string
      */
     protected $name;
+
+    protected $option;
+
+    protected $namespace;
 
     protected const COMMAND_KEY = 'criteria';
 
@@ -50,15 +54,17 @@ class CreateCriteria extends Command
     public function handle()
     {
         $this->name = ucfirst($this->argument('name'));
+        $this->option = $this->option('dir') ?? '';
+        $this->namespace = !empty($this->option) ? '\\' . ucfirst($this->option) : '';
         $tplContent = $this->getFullTplContent(static::COMMAND_KEY, $this->name, null);
-        $this->writeFileByType(static::COMMAND_KEY, $this->name, $tplContent);
+        $this->writeFileByType(static::COMMAND_KEY, $this->name, $tplContent, $this->option);
     }
 
     protected function getTplVars()
     {
         return [
             'class_name' => $this->name,
-            'namespace'  => $this->getFullNamespaceByType(static::COMMAND_KEY),
+            'namespace'  => $this->getFullNamespaceByType(static::COMMAND_KEY) . $this->namespace,
             'interface'  => 'ICriteria',
         ];
     }
