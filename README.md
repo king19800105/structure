@@ -51,7 +51,7 @@
 
 #### 注册到服务容器
 
-说明：用命令生成仓储文件时(phpno1:entity || phpno1:repository)，会自动生成ArchitectureServiceProvider文件。
+说明：用命令生成仓储文件时(anthony:entity || anthony:repository)，会自动生成ArchitectureServiceProvider文件。
 
 ```php
     # 在config/app.php中
@@ -95,7 +95,7 @@
 
 
 ## 命令
-说明：使用命令创建仓储文件时(phpno1:entity和phpno1:repository)，会自动绑定接口与实现类关系。
+说明：使用命令创建仓储文件时(anthony:entity和anthony:repository)，会自动绑定接口与实现类关系。
 
 ###  生成组合配置
 ```php
@@ -289,7 +289,7 @@ class UserIndexResponse implements Responsable
 + Filters    : 根据参数自动过滤和排序。
 + Traits     : Trait封装
 
-### Phpno1\Repository\Contracts\IRepository;
+### Anthony\Repository\Contracts\IRepository;
 
 - function entity();
 - function all();
@@ -307,7 +307,7 @@ class UserIndexResponse implements Responsable
 - function toEntity();
 - function toRepository(Builder $entity);
 
-### Phpno1\Repository\Eloquent;
+### Anthony\Repository\Eloquent;
 
 
   ```php
@@ -498,10 +498,10 @@ class NameFilter extends AbstractFilter implements IOrder
 
 ```php
  // 过滤name和email
- http://www.phpno1.com/user?name=Anthony&email=king19800105@163.com
+ http://www.anthony.com/user?name=Anthony&email=king19800105@163.com
  
  // 过滤和排序组合。参数"o"表示排序方式。参数"orderable"表示要排序的字段
- http://www.phpno1.com/user?name=Anthony&email=king19800105@163.com&o=desc&orderable=name
+ http://www.anthony.com/user?name=Anthony&email=king19800105@163.com&o=desc&orderable=name
 ```
 
 ## scope
