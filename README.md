@@ -314,6 +314,9 @@ class UserIndexResponse implements Responsable
 - function withCriteria(...$criteria);
 - function toEntity();
 - function toRepository(Builder $entity);
+- function transaction(callable $callback = null);
+- function rollBack();
+- function commit();
 
 ### Anthony\Repository\Eloquent;
 
