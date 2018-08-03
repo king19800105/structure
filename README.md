@@ -2,7 +2,7 @@
 
     
 ## 特别注意
-+ 该扩展包是<a href="#使用要求">yb19890724/phpno1-architecture</a>的特别版本，根据自身业务的定制开发版。
++ 该扩展包是<a href="https://github.com/yb19890724/phpno1-architecture">yb19890724/phpno1-architecture</a>的特别版本，根据自身业务的定制开发版。
 + 只支持单字段排序
 + 切断了sql连贯操作后，和另一个操作的上下文联系
 + 提供了boot方法的执行，可以把公共的操作方到boot中操作
