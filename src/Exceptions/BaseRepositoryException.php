@@ -20,7 +20,7 @@ abstract class BaseRepositoryException extends Exception
     public function __construct(string $message = null)
     {
         $this->coverCurrentClassNameToSnakeCase();
-        $lang = static::LANGUAGE_FILE_NAME . '.' . $this->snakeClassName;
+        $lang = static::LANGUAGE_FILE_NAME . '::' . static::LANGUAGE_FILE_NAME . '.' . $this->snakeClassName;
         $message = $message ?? __($lang);
         parent::__construct($message, $this->errorCode);
     }
