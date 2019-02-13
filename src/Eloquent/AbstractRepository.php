@@ -381,7 +381,7 @@ abstract class AbstractRepository implements IRepository
             return;
         }
 
-        DB::transaction(call_user_func($callback));
+        DB::transaction($callback);
     }
 
     /**
