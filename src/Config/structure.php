@@ -33,15 +33,15 @@ return [
     'generator'  => [
         'root_namespace' => 'App\\',
         'namespace' => [
-            'controller'          => 'Backend',
-            'repository_eloquent' => 'Repository\\Eloquent',
-            'repository'          => 'Repository\\Contracts',
-            'criteria'            => 'Repository\\Criterias',
+            'controller'          => '',
+            'repository_eloquent' => 'Repositories\\Eloquent',
+            'repository'          => 'Repositories\\Contracts',
+            'criteria'            => 'Repositories\\Criterias',
             'provider'            => 'Providers\\StructureServiceProvider',
             'service'             => 'Services',
             'model'               => 'Models',
-            'response'            => 'Http\\Responses',
-            'filter'              => 'Repository\\Filters'
+            'response'            => 'Http\\Responders',
+            'filter'              => 'Repositories\\Filters'
         ]
     ]
 ];

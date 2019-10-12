@@ -13,20 +13,20 @@ class CreateRequest extends Command
      *
      * @var string
      */
-    protected $signature = 'anthony:request {name} {--dir=}';
+    protected $signature = 'anthony:validation {name} {--dir=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command Create Request';
+    protected $description = 'Command Create Validation';
 
     protected $name;
 
     protected $option;
 
-    protected const COMMAND_KEY = 'request';
+    protected const COMMAND_KEY = 'validation';
 
     /**
      * Create a new command instance.
