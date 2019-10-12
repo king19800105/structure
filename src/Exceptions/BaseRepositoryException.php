@@ -3,6 +3,7 @@
 namespace Anthony\Structure\Exceptions;
 
 use Exception;
+use Illuminate\Support\Str;
 
 /**
  * 仓储异常父类
@@ -32,7 +33,7 @@ abstract class BaseRepositoryException extends Exception
      */
     protected function coverCurrentClassNameToSnakeCase()
     {
-        $name = snake_case(class_basename(get_class($this)));
+        $name = Str::snake(class_basename(get_class($this)));
         $this->snakeClassName = str_replace('_exception', '', $name);
     }
 }

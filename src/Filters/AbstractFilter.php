@@ -2,6 +2,8 @@
 
 namespace Anthony\Structure\Filters;
 
+use Illuminate\Support\Arr;
+
 /**
  * 过滤基类
  * AbstractFilter class
@@ -26,7 +28,7 @@ abstract class AbstractFilter implements IFilter
      */
     protected function resolveFilterValue($value)
     {
-        return array_get($this->mappings(), $value);
+        return Arr::get($this->mappings(), $value);
     }
 
     /**
@@ -37,7 +39,7 @@ abstract class AbstractFilter implements IFilter
      */
     protected function resolveOrderDirection($direction)
     {
-        return array_get([
+        return Arr::get([
             'desc' => 'desc',
             'asc' => 'asc'
         ], $direction, 'desc');

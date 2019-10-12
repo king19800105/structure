@@ -2,6 +2,7 @@
 
 namespace Anthony\Structure\Eloquent;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Anthony\Structure\Criterias\ICriteria;
 use Anthony\Structure\Contracts\IRepository;
@@ -303,7 +304,7 @@ abstract class AbstractRepository implements IRepository
         $key = get_class($criteria);
 
         if (array_key_exists($key, $this->criteria)) {
-            array_forget($this->criteria, $key);
+            Arr::forget($this->criteria, $key);
         }
 
         return $this;
@@ -323,7 +324,7 @@ abstract class AbstractRepository implements IRepository
             }
         }
 
-        $criteriaList = array_flatten(array_values($this->criteria));
+        $criteriaList = Arr::flatten(array_values($this->criteria));
         $model = $this->entity;
 
         foreach ($criteriaList as $item) {

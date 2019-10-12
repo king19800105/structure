@@ -3,7 +3,8 @@
 namespace Anthony\Structure\Criterias;
 
 /**
- * EagerLoad class
+ * Class EagerLoad
+ * @package Anthony\Structure\Criterias
  */
 class EagerLoad implements ICriteria
 {

@@ -71,10 +71,10 @@ trait GeneratorHelp
         $path = $this->getNamespaceByType($type);
 
         if (in_array($type, $this->addSuffix)) {
-            $name = !ends_with($name, $upperType) ? $name . $upperType : $name;
+            $name = !Str::endsWith($name, $upperType) ? $name . $upperType : $name;
         }
 
-        $name = ucfirst(camel_case($name));
+        $name = ucfirst(Str::camel($name));
         $name = !empty($prefix) ? $prefix . '/' . $name : $name;
         $name = !empty($path) ? $path . '\\' . $name : $name;
 
@@ -106,7 +106,7 @@ trait GeneratorHelp
         $tplContent = $this->replaceTplVars($tplContent, $this->getTplVars());
 
         if (!empty($method)) {
-            $name = $isSnake ? snake_case($name) : $name;
+            $name = $isSnake ? Str::snake($name) : $name;
             return $this->setTplMethodByOption($option, $name, $tplContent, $method);
         }
 
@@ -164,7 +164,7 @@ trait GeneratorHelp
 
     protected function showSuccessInfo($name)
     {
-        $name = ucfirst(camel_case($name));
+        $name = ucfirst(Str::camel($name));
         $this->info($name . ' created successfully.');
     }
 

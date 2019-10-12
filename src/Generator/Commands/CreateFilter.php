@@ -4,6 +4,7 @@ namespace Anthony\Structure\Generator\Commands;
 
 use Illuminate\Console\Command;
 use Anthony\Structure\Generator\GeneratorHelp;
+use Illuminate\Support\Str;
 
 class CreateFilter extends Command
 {
@@ -60,7 +61,7 @@ class CreateFilter extends Command
         return [
             'class_name'     => $this->name,
             'namespace'      => $this->setPrefix($this->getFullNamespaceByType(static::COMMAND_KEY)),
-            'var_name'       => snake_case($this->name),
+            'var_name'       => Str::snake($this->name),
             'sort_interface' => $this->sort ? 'implements IOrder' : ''
         ];
     }
