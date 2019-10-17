@@ -54,8 +54,8 @@
 
 #### 创建并注册到服务容器
 
-执行：php artisan anthony:provider
-说明：用命令生成仓储文件时(anthony:entity || anthony:repository)，会自动生成ArchitectureServiceProvider文件。
+- 执行：php artisan anthony:provider
+- 说明：用命令生成仓储文件时(anthony:entity || anthony:repository)，会自动生成ArchitectureServiceProvider文件。
 
 ```php
     # 在config/app.php中
