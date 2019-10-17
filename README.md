@@ -162,7 +162,7 @@
 ```php
     @params    {name}          文件名称 
     @params    {--dir=}        生成目录
-    php artisan anthony:request {name} {--dir=}
+    php artisan anthony:validation {name} {--dir=}
 ```
 
 ### 生成响应类
