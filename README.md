@@ -52,11 +52,6 @@
 
 ### laravel
 
-#### 生成配置文件
-```php
-    php artisan vendor:publish --provider "Anthony\Structure\Providers\StructureServiceProvider"
-```
-
 #### 创建并注册到服务容器
 
 执行：php artisan anthony:provider
@@ -68,6 +63,11 @@
         // ......
         App\Providers\StructureServiceProvider::class
     ];
+```
+
+#### 生成配置文件
+```php
+    php artisan vendor:publish --provider "Anthony\Structure\Providers\StructureServiceProvider"
 ```
 
 ## 配置 
