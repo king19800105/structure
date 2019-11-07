@@ -52,15 +52,10 @@
 
 ### laravel
 
-#### 生成配置文件
-```php
-    php artisan vendor:publish --provider "Anthony\Structure\Providers\StructureServiceProvider"
-```
-
 #### 创建并注册到服务容器
 
-执行：php artisan anthony:provider
-说明：用命令生成仓储文件时(anthony:entity || anthony:repository)，会自动生成ArchitectureServiceProvider文件。
+- 执行：php artisan anthony:provider
+- 说明：用命令生成仓储文件时(anthony:entity || anthony:repository)，会自动生成ArchitectureServiceProvider文件。
 
 ```php
     # 在config/app.php中
@@ -68,6 +63,11 @@
         // ......
         App\Providers\StructureServiceProvider::class
     ];
+```
+
+#### 生成配置文件
+```php
+    php artisan vendor:publish --provider "Anthony\Structure\Providers\StructureServiceProvider"
 ```
 
 ## 配置 
@@ -162,7 +162,7 @@
 ```php
     @params    {name}          文件名称 
     @params    {--dir=}        生成目录
-    php artisan anthony:request {name} {--dir=}
+    php artisan anthony:validation {name} {--dir=}
 ```
 
 ### 生成响应类
