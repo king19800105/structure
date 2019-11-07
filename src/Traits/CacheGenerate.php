@@ -2,11 +2,24 @@
 
 namespace Anthony\Structure\Traits;
 
-
+/**
+ * Trait CacheGenerate
+ * @package Anthony\Structure\Traits
+ */
 trait CacheGenerate
 {
+    /**
+     * 缓存前缀
+     *
+     * @var string
+     */
     protected $cacheKeyPrefix;
 
+    /**
+     * 缓存设置
+     *
+     * @var array
+     */
     protected $defaultCacheSettings = [
         'enabled' => true,
         'minutes'  => 5,
@@ -17,16 +30,15 @@ trait CacheGenerate
      *
      * @param $key
      * @param callable $callableOnMiss
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return \Illuminate\Contracts\Cache\Repository|mixed
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     protected function getOrCache($key, callable $callableOnMiss)
     {
         $key = $this->cacheKeyPrefix ?? class_basename($this) . ':' . $key;
         $cacheConfig = config('structure.cache') ?? $this->defaultCacheSettings;
-
         if ($cacheConfig['enabled']) {
             $cache = cache();
-
             if ($cache->has($key)) {
                 return $cache->get($key);
             }

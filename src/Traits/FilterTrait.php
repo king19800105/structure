@@ -36,6 +36,13 @@ trait FilterTrait
     protected $entity;
 
     /**
+     * 别名映射
+     *
+     * @var array
+     */
+    protected $mapping;
+
+    /**
      * 初始化数据
      *
      * @param [type] $entity
@@ -44,9 +51,13 @@ trait FilterTrait
      */
     public function init($entity, $filterList)
     {
+        $request = request();
+        //获取path params 合并到request里面
+        $request->merge($request->route()->parameters());
         $this->orderConfigs = config('structure.order');
-        $this->entity = $entity;
-        $this->filterList = $filterList;
+        $this->entity       = $entity;
+        $this->filterList   = $filterList;
+        $this->mapping      = $this->getFieldMapping();
 
         return $this;
     }
@@ -58,18 +69,29 @@ trait FilterTrait
      */
     protected function getSearchable()
     {
-        //获取path params 合并到request里面
-        request()->merge(request()->route()->parameters());
+        $result     = [];
+        $request    = request();
+        $filterKeys = array_keys($this->filterList);
+        if (empty($this->mapping)) {
+            return array_filter(
+                $request->only($filterKeys)
+            );
+        }
 
-        return array_filter(
-            request()->only(array_keys($this->filterList))
-        );
+        foreach ($this->mapping as $key => $item) {
+            if ($request->exists($key) && in_array($item, $filterKeys)) {
+                $result[$item] = $request->input($key);
+            }
+        }
+
+        return array_filter(array_merge($request->only($filterKeys), $result));
     }
 
     /**
      * 执行过滤操作
      *
      * @return $this
+     * @throws \Throwable
      */
     public function doFilter()
     {
@@ -98,14 +120,18 @@ trait FilterTrait
      * 执行单字段排序操作
      *
      * @return $this
+     * @throws \Throwable
      */
     public function doOrder()
     {
         $orderInfo = $this->getOrderable();
-
         if (!empty($orderInfo)) {
-            $key = $orderInfo[$this->orderConfigs['field']];
+            $key  = $orderInfo[$this->orderConfigs['field']];
             $type = $orderInfo[$this->orderConfigs['type']];
+            if (!empty($this->mapping) && array_key_exists($key, $this->mapping)) {
+                $key = $this->mapping[$key];
+            }
+
             $this->entity = $this->resolveOrder($key)->order($this->entity, $type);
         }
 
@@ -126,8 +152,10 @@ trait FilterTrait
     /**
      * 实例化filter对象
      *
-     * @param [type] $class
-     * @return IFilter
+     * @param $filterName
+     *
+     * @return mixed
+     * @throws \Throwable
      */
     protected function resolveFilter($filterName)
     {
@@ -144,17 +172,35 @@ trait FilterTrait
      * 实例化order对象
      *
      * @param $orderName
+     *
      * @return mixed
+     * @throws \Throwable
      */
     protected function resolveOrder($orderName)
     {
         $order = new $this->filters[$orderName];
-
         throw_if(
             !$order instanceof IOrder,
             new IllegalFilterInstanceException()
         );
 
         return $order;
+    }
+
+    /**
+     * 获取映射列表
+     *
+     * @return array
+     */
+    protected function getFieldMapping()
+    {
+        $result = [];
+        foreach ($this->filterList as $item) {
+            if ($mapping = constant($item . '::ALIAS_MAPPING')) {
+                $result = array_merge($result, $mapping);
+            }
+        }
+
+        return $result;
     }
 }

@@ -73,7 +73,6 @@ abstract class AbstractRepository implements IRepository
     public function __call($method, $parameters)
     {
         $scope = 'scope'.ucfirst($method);
-
         if (method_exists($this->entity, $scope)) {
             array_unshift($parameters, $this->entity);
             $this->entity = $this->entity->$scope(...array_values($parameters));
@@ -152,13 +151,13 @@ abstract class AbstractRepository implements IRepository
     public function find($id)
     {
         $model = $this->entity->find($id);
-
         throw_if(
             !$model,
             (new ModelNotFoundException)->setModel(
                 get_class($this->entity->getModel())
             )
         );
+
         $this->resetEntity();
 
         return $model;

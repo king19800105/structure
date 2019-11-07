@@ -9,12 +9,6 @@ use Anthony\Structure\Filters\{
 
 class {class_name} extends AbstractFilter {sort_interface}
 {
-    protected function mappings()
-    {
-        return [
-
-        ];
-    }
 
     public function filter($entity, $value)
     {
