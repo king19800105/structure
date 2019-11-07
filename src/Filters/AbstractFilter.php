@@ -10,6 +10,10 @@ use Illuminate\Support\Arr;
  */
 abstract class AbstractFilter implements IFilter
 {
+    /**
+     * 别名映射
+     */
+    public const ALIAS_MAPPING = [];
 
     /**
      * 排序规则映射
