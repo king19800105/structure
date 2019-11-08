@@ -17,13 +17,13 @@ return [
      * 数据缓存设置
      */
     'cache'      => [
-        'enabled'    => true,
-        'minutes'    => 10,
+        'enabled' => true,
+        'second'  => 10,
     ],
     /**
      * 排序设置
      */
-    'order' => [
+    'order'      => [
         'type'  => 'o',
         'field' => 'orderable',
     ],
@@ -32,7 +32,7 @@ return [
      */
     'generator'  => [
         'root_namespace' => 'App\\',
-        'namespace' => [
+        'namespace'      => [
             'controller'          => '',
             'repository_eloquent' => 'Repositories\\Eloquent',
             'repository'          => 'Repositories\\Contracts',

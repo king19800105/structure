@@ -22,7 +22,7 @@ trait CacheGenerate
      */
     protected $defaultCacheSettings = [
         'enabled' => true,
-        'minutes'  => 5,
+        'second'  => 10,
     ];
 
     /**
@@ -35,7 +35,7 @@ trait CacheGenerate
      */
     protected function getOrCache($key, callable $callableOnMiss)
     {
-        $key = $this->cacheKeyPrefix ?? class_basename($this) . ':' . $key;
+        $key         = $this->cacheKeyPrefix ?? class_basename($this) . ':' . $key;
         $cacheConfig = config('structure.cache') ?? $this->defaultCacheSettings;
         if ($cacheConfig['enabled']) {
             $cache = cache();
@@ -43,8 +43,8 @@ trait CacheGenerate
                 return $cache->get($key);
             }
 
-            $data =  call_user_func($callableOnMiss);
-            $cache->put($key, $data, $cacheConfig['minutes']);
+            $data = call_user_func($callableOnMiss);
+            $cache->put($key, $data, $cacheConfig['second']);
 
             return $data;
         }
